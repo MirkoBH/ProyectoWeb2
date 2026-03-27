@@ -1,0 +1,86 @@
+{
+  "region": "Argentina",
+  "descripcion": "Listado de marcas y modelos comercializados y/o fabricados históricamente en el país",
+  "marcas": [
+    {
+      "marca": "Toyota",
+      "modelos": ["Hilux", "Corolla", "Etios", "Yaris", "Corolla Cross", "SW4", "RAV4", "Prius", "86", "Land Cruiser", "Camry", "Hiace", "Celica", "Corona", "Cressida"]
+    },
+    {
+      "marca": "Volkswagen",
+      "modelos": ["Gol", "Gol Trend", "Amarok", "Taos", "T-Cross", "Nivus", "Vento", "Polo", "Virtus", "Tera", "Saveiro", "Suran", "Fox", "Bora", "Passat", "Scirocco", "Tiguan", "Touareg", "Golf", "Up!", "Voyage", "Beetle", "Kombi", "Gacel", "Senda", "Quantum"]
+    },
+    {
+      "marca": "Fiat",
+      "modelos": ["Cronos", "Argo", "Mobi", "Pulse", "Fastback", "Toro", "Strada", "Fiorino", "Titano", "Uno", "Palio", "Siena", "Idea", "Punto", "Linea", "Bravo", "500", "500X", "Ducato", "Duna", "Spazio", "147", "128", "125", "600", "1500", "Regatta"]
+    },
+    {
+      "marca": "Renault",
+      "modelos": ["Sandero", "Stepway", "Logan", "Kardian", "Alaskan", "Duster", "Oroch", "Kwid", "Kwid E-Tech", "Boreal", "Fluence", "Mégane", "Kangoo", "Master", "Clio", "Twingo", "Laguna", "Scenic", "Symbol", "Latitude", "Koleos", "Captur", "R12", "R19", "R11", "R9", "R18", "R21", "Fuego", "Torino", "R4", "R6"]
+    },
+    {
+      "marca": "Ford",
+      "modelos": ["Ranger", "Territory", "Maverick", "Bronco Sport", "Mustang", "Kuga", "F-150", "Transit", "Focus", "Fiesta", "EcoSport", "Ka", "Mondeo", "S-Max", "Falcon", "Fairlane", "Taunus", "Sierra", "Escort", "Orion", "Galaxy", "Explorer", "F-100"]
+    },
+    {
+      "marca": "Chevrolet",
+      "modelos": ["Cruze", "Onix", "Onix Plus", "Prisma", "Tracker", "S10", "Montana", "Equinox", "Trailblazer", "Spin", "Captiva", "Sonic", "Agile", "Corsa", "Classic", "Astra", "Vectra", "Meriva", "Zafira", "Spark", "Celta", "400", "Chevy", "Luv", "Silverado"]
+    },
+    {
+      "marca": "Peugeot",
+      "modelos": ["208", "2008", "3008", "5008", "Partner", "Expert", "Boxer", "408", "308", "207 Compact", "206", "307", "407", "508", "RCZ", "504", "505", "405", "404", "205"]
+    },
+    {
+      "marca": "Citroën",
+      "modelos": ["C3", "C3 Aircross", "C4 Cactus", "C4 Hatch", "C4 Lounge", "Basalt", "C5 Aircross", "Berlingo", "Jumpy", "Jumper", "C15", "C5", "C6", "Picasso", "3CV", "Ami 8", "Mehari"]
+    },
+    {
+      "marca": "Nissan",
+      "modelos": ["Frontier", "Kicks", "Versa", "Sentra", "X-Trail", "Leaf", "Kait", "March", "Note", "Murano", "Pathfinder", "Tiida", "350Z", "370Z"]
+    },
+    {
+      "marca": "Jeep",
+      "modelos": ["Renegade", "Compass", "Commander", "Gladiator", "Grand Cherokee", "Wrangler", "Avenger", "Cherokee", "Patriot"]
+    },
+    {
+      "marca": "Honda",
+      "modelos": ["HR-V", "ZR-V", "CR-V", "Civic", "City", "WR-V", "Accord", "Fit", "Legend", "Prelude"]
+    },
+    {
+      "marca": "Audi",
+      "modelos": ["A1", "A3", "A4", "A5", "A6", "A7", "A8", "Q2", "Q3", "Q5", "Q7", "Q8", "TT", "R8", "e-tron"]
+    },
+    {
+      "marca": "BMW",
+      "modelos": ["Serie 1", "Serie 2", "Serie 3", "Serie 4", "Serie 5", "X1", "X2", "X3", "X4", "X5", "X6", "X7", "Z4", "i3", "iX"]
+    },
+    {
+      "marca": "Mercedes-Benz",
+      "modelos": ["Clase A", "Clase B", "Clase C", "Clase E", "Clase S", "GLA", "GLB", "GLC", "GLE", "GLS", "Sprinter", "Vito", "Accelo", "Atego"]
+    },
+    {
+      "marca": "Hyundai",
+      "modelos": ["Creta", "Tucson", "Kona", "Santa Fe", "Staria", "HB20", "Veloster", "Ioniq", "H1", "HD78", "Genesis"]
+    },
+    {
+      "marca": "Kia",
+      "modelos": ["Seltos", "Sportage", "Sorento", "Carnival", "Niro", "Cerato", "Picanto", "Rio", "K2500", "Tasman"]
+    },
+    {
+      "marca": "Chery",
+      "modelos": ["Tiggo 2", "Tiggo 4", "Tiggo 7", "Tiggo 8", "Arrizo 5", "QQ", "Face", "Skin"]
+    },
+    {
+      "marca": "BAIC",
+      "modelos": ["X35", "X55", "BJ30", "BJ40", "D20"]
+    },
+    {
+      "marca": "Haval",
+      "modelos": ["H1", "H2", "H6", "Jolion"]
+    },
+    {
+      "marca": "JAC",
+      "modelos": ["S2", "S3", "S5", "T6", "T8"]
+    }
+  ]
+}

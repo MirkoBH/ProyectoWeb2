@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AutoMarket</title>
+  <meta name="description" content="Plataforma inteligente para compra y venta de autos usados." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./src/css/styles.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg fixed-top glass-nav py-3">
+      <div class="container">
+        <a class="navbar-brand fw-bold brand-mark" href="#home">AutoMarket</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto me-3 gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="#home" data-i18n="nav.home">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#explore" data-i18n="nav.explore">Explorar</a></li>
+            <li class="nav-item" id="publishNavItem"><a class="nav-link" href="#" data-i18n="nav.publish">Publicar</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-i18n="nav.login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-i18n="nav.register">Registro</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact" data-i18n="nav.contact">Contacto</a></li>
+          </ul>
+          <div class="d-flex align-items-center gap-2">
+            <select id="roleSelect" class="form-select form-select-sm lang-select" aria-label="Role selector">
+              <option value="buyer">Buyer</option>
+              <option value="seller">Seller</option>
+            </select>
+            <select id="languageSelect" class="form-select form-select-sm lang-select" aria-label="Language selector">
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+            </select>
+            <button class="btn btn-outline-dark btn-sm" id="wishlistButton" data-bs-toggle="offcanvas" data-bs-target="#wishlistDrawer" aria-controls="wishlistDrawer">
+              <span data-i18n="wishlist.title">Deseados</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero-section d-flex align-items-end">
+      <div class="container pb-5">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <p class="kicker mb-2" data-i18n="hero.kicker">Compra y venta inteligente</p>
+            <h1 class="display-5 fw-bold mb-3" data-i18n="hero.title">Encontra tu proximo auto usado con analisis IA.</h1>
+            <p class="lead text-muted mb-4" data-i18n="hero.subtitle">Filtra por marca, modelo, anio, precio y ubicacion en segundos.</p>
+            <div class="d-flex flex-wrap gap-2 hero-actions">
+              <a href="#explore" class="btn btn-primary-red btn-lg" data-i18n="hero.ctaExplore">Buscar autos</a>
+              <button class="btn btn-dark btn-lg" id="heroPublishButton" data-i18n="hero.ctaPublish">Publicar auto</button>
+            </div>
+            <div class="metrics d-flex flex-wrap gap-4 mt-4">
+              <div>
+                <strong id="metricCars">0</strong>
+                <span data-i18n="hero.metrics.cars">Autos publicados</span>
+              </div>
+              <div>
+                <strong>98%</strong>
+                <span data-i18n="hero.metrics.trust">Consultas respondidas</span>
+              </div>
+              <div>
+                <strong>24h</strong>
+                <span data-i18n="hero.metrics.ai">Analisis IA estimado</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card shadow-soft border-0 p-3 hero-card">
+              <h2 class="h5 fw-bold" data-i18n="filters.quickSearch">Busqueda rapida</h2>
+              <form id="heroSearchForm" class="row g-2 mt-1">
+                <div class="col-12">
+                  <select id="quickBrand" class="form-select" aria-label="Marca"></select>
+                </div>
+                <div class="col-12">
+                  <select id="quickModel" class="form-select" aria-label="Modelo"></select>
+                </div>
+                <div class="col-6">
+                  <input id="quickMinPrice" class="form-control" type="number" min="0" placeholder="Precio min" />
+                </div>
+                <div class="col-6">
+                  <input id="quickMaxPrice" class="form-control" type="number" min="0" placeholder="Precio max" />
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary-red w-100" data-i18n="filters.search">Buscar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="explore" class="py-5">
+      <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <div>
+            <p class="kicker mb-1" data-i18n="explore.kicker">Explorar publicaciones</p>
+            <h2 class="mb-0" data-i18n="explore.title">Listado de autos usados</h2>
+          </div>
+          <div class="d-flex gap-2 align-items-center">
+            <span class="small text-muted" id="resultCount">0 resultados</span>
+            <button id="openFilterDrawer" class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtersDrawer" aria-controls="filtersDrawer" data-i18n="filters.title">Filtros</button>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-3 d-none d-lg-block">
+            <aside class="card border-0 shadow-soft p-3 filter-panel">
+              <h3 class="h6 fw-bold" data-i18n="filters.title">Filtros</h3>
+              <div id="filtersContainer"></div>
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-primary-red" id="applyFiltersButton" data-i18n="filters.apply">Aplicar filtros</button>
+                <button class="btn btn-outline-dark" id="clearFiltersButton" data-i18n="filters.clear">Limpiar filtros</button>
+              </div>
+            </aside>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <button class="btn btn-dark" id="compareSelectedButton" disabled data-i18n="compare.compareSelected">Comparar seleccionados</button>
+              <button class="btn btn-outline-dark" id="compareWishlistButton" data-i18n="compare.compareWishlist">Comparar desde deseados</button>
+            </div>
+            <div id="carsGrid" class="row g-3"></div>
+            <div id="emptyState" class="alert alert-light border mt-3 d-none" data-i18n="explore.empty">No encontramos autos con esos filtros.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-5 contact-band">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <p class="kicker mb-2" data-i18n="contact.kicker">Contacto</p>
+            <h2 class="mb-3" data-i18n="contact.title">Hablemos de tu proxima publicacion</h2>
+            <p class="text-muted" data-i18n="contact.subtitle">Escribinos para conocer mas sobre AutoMarket.</p>
+          </div>
+          <div class="col-lg-6">
+            <form class="card border-0 p-4 shadow-soft">
+              <div class="mb-3">
+                <label class="form-label" for="contactName" data-i18n="contact.name">Nombre</label>
+                <input class="form-control" id="contactName" type="text" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="contactEmail" data-i18n="contact.email">Email</label>
+                <input class="form-control" id="contactEmail" type="email" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="contactMessage" data-i18n="contact.message">Mensaje</label>
+                <textarea class="form-control" id="contactMessage" rows="4" required></textarea>
+              </div>
+              <button type="button" class="btn btn-primary-red" data-i18n="contact.send">Enviar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+      <small>&copy; <span id="currentYear"></span> AutoMarket</small>
+      <div class="d-flex gap-3 small">
+        <a href="#" class="footer-link" data-i18n="footer.terms">Terminos</a>
+        <a href="#" class="footer-link" data-i18n="footer.privacy">Privacidad</a>
+        <a href="#contact" class="footer-link" data-i18n="footer.support">Soporte</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="wishlistDrawer" aria-labelledby="wishlistDrawerLabel">
+    <div class="offcanvas-header">
+      <h5 id="wishlistDrawerLabel" data-i18n="wishlist.title">Lista de deseados</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="wishlistItems"></div>
+      <button class="btn btn-dark w-100 mt-3" id="wishlistCompareButton" data-i18n="compare.compareWishlist">Comparar desde deseados</button>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="filtersDrawer" aria-labelledby="filtersDrawerLabel">
+    <div class="offcanvas-header">
+      <h5 id="filtersDrawerLabel" data-i18n="filters.title">Filtros</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="filtersContainerMobile"></div>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-primary-red" id="applyFiltersMobileButton" data-bs-dismiss="offcanvas" data-i18n="filters.apply">Aplicar filtros</button>
+        <button class="btn btn-outline-dark" id="clearFiltersMobileButton" data-i18n="filters.clear">Limpiar filtros</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="compareModalLabel" data-i18n="compare.title">Comparacion de autos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="compareTableContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="./src/js/i18n.js"></script>
+  <script src="./src/js/data.js"></script>
+  <script src="./src/js/app.js"></script>
+</body>
+</html>
