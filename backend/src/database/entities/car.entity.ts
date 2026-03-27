@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -37,7 +38,7 @@ export class Car {
   @Column()
   province!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "text", nullable: true })
   city!: string | null;
 
   @Column({ type: "text" })
@@ -59,6 +60,7 @@ export class Car {
   sellerId!: string;
 
   @ManyToOne(() => User, (user) => user.cars, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "seller_id" })
   seller!: User;
 
   @CreateDateColumn({ name: "created_at" })

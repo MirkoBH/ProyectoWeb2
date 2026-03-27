@@ -24,8 +24,8 @@
             <li class="nav-item"><a class="nav-link" href="#home" data-i18n="nav.home">Inicio</a></li>
             <li class="nav-item"><a class="nav-link" href="#explore" data-i18n="nav.explore">Explorar</a></li>
             <li class="nav-item" id="publishNavItem"><a class="nav-link" href="#" data-i18n="nav.publish">Publicar</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-i18n="nav.login">Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-i18n="nav.register">Registro</a></li>
+            <li class="nav-item"><a class="nav-link" id="loginNavLink" href="#" data-i18n="nav.login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" id="registerNavLink" href="#" data-i18n="nav.register">Registro</a></li>
             <li class="nav-item"><a class="nav-link" href="#contact" data-i18n="nav.contact">Contacto</a></li>
           </ul>
           <div class="d-flex align-items-center gap-2">
@@ -37,6 +37,8 @@
               <option value="es">ES</option>
               <option value="en">EN</option>
             </select>
+            <span id="authUserBadge" class="badge text-bg-dark d-none"></span>
+            <button class="btn btn-outline-danger btn-sm d-none" id="logoutButton" data-i18n="nav.logout">Salir</button>
             <button class="btn btn-outline-dark btn-sm" id="wishlistButton" data-bs-toggle="offcanvas" data-bs-target="#wishlistDrawer" aria-controls="wishlistDrawer">
               <span data-i18n="wishlist.title">Deseados</span>
             </button>
@@ -210,6 +212,73 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="compareTableContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel" data-i18n="auth.loginTitle">Iniciar sesion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="loginForm">
+          <div class="modal-body">
+            <div id="loginFeedback" class="alert alert-danger d-none" role="alert"></div>
+            <div class="mb-3">
+              <label class="form-label" for="loginEmail" data-i18n="contact.email">Email</label>
+              <input id="loginEmail" class="form-control" type="email" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="loginPassword" data-i18n="auth.password">Contrasena</label>
+              <input id="loginPassword" class="form-control" type="password" minlength="6" required />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" data-i18n="auth.cancel">Cancelar</button>
+            <button type="submit" class="btn btn-primary-red" data-i18n="auth.loginAction">Entrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel" data-i18n="auth.registerTitle">Crear cuenta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="registerForm">
+          <div class="modal-body">
+            <div id="registerFeedback" class="alert alert-danger d-none" role="alert"></div>
+            <div class="mb-3">
+              <label class="form-label" for="registerName" data-i18n="auth.fullName">Nombre completo</label>
+              <input id="registerName" class="form-control" type="text" minlength="3" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="registerEmail" data-i18n="contact.email">Email</label>
+              <input id="registerEmail" class="form-control" type="email" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="registerPassword" data-i18n="auth.password">Contrasena</label>
+              <input id="registerPassword" class="form-control" type="password" minlength="6" required />
+            </div>
+            <div class="mb-0">
+              <label class="form-label" for="registerRole" data-i18n="auth.role">Rol</label>
+              <select id="registerRole" class="form-select">
+                <option value="buyer" data-i18n="role.buyer">Comprador</option>
+                <option value="seller" data-i18n="role.seller">Vendedor</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" data-i18n="auth.cancel">Cancelar</button>
+            <button type="submit" class="btn btn-primary-red" data-i18n="auth.registerAction">Registrarme</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

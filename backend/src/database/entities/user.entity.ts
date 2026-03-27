@@ -21,7 +21,7 @@ export class User {
   @Column({ name: "password_hash" })
   passwordHash!: string;
 
-  @Column()
+  @Column({ name: "full_name" })
   fullName!: string;
 
   @Column({ type: "varchar", default: "buyer" })

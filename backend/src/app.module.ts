@@ -14,16 +14,26 @@ import { AppController } from "./app.controller";
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: "postgres",
-        url: configService.get<string>("DATABASE_URL"),
-        autoLoadEntities: true,
-        synchronize: false,
-        ssl: configService.get<string>("DATABASE_URL")?.includes("supabase.co")
-          ? { rejectUnauthorized: false }
-          : false,
-        entities: [User, Car]
-      })
+      useFactory: (configService: ConfigService) => {
+        const url = configService.get<string>("DATABASE_URL") ?? "";
+        const isSupabase = /supabase\.(co|com)/.test(url);
+
+        return {
+          type: "postgres",
+          url,
+          autoLoadEntities: true,
+          synchronize: false,
+          ssl: isSupabase ? { rejectUnauthorized: false } : false,
+          extra: isSupabase
+            ? {
+                ssl: {
+                  rejectUnauthorized: false
+                }
+              }
+            : undefined,
+          entities: [User, Car]
+        };
+      }
     }),
     AuthModule,
     UsersModule,

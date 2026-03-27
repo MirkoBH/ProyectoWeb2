@@ -1,7 +1,10 @@
 (function () {
   const state = {
+    apiBaseUrl: localStorage.getItem("automarket_api_base_url") || "http://localhost:3000",
     language: localStorage.getItem("automarket_lang") || "es",
     role: localStorage.getItem("automarket_role") || "buyer",
+    authToken: localStorage.getItem("automarket_auth_token") || "",
+    currentUser: JSON.parse(localStorage.getItem("automarket_user") || "null"),
     cars: [...window.APP_CARS],
     filteredCars: [],
     selectedForCompare: new Set(),
@@ -27,6 +30,10 @@
   document.addEventListener("DOMContentLoaded", init);
 
   async function init() {
+    if (state.currentUser?.role) {
+      state.role = state.currentUser.role;
+    }
+
     cacheElements();
     await loadCatalogs();
     renderFilterForms();
@@ -35,6 +42,7 @@
     applyLanguage(state.language);
     updateRoleLabels();
     updatePublishVisibility();
+    updateAuthUi();
     runFilters();
     el.currentYear.textContent = new Date().getFullYear();
     el.metricCars.textContent = String(state.cars.length);
@@ -66,6 +74,20 @@
     el.heroSearchForm = document.getElementById("heroSearchForm");
     el.publishNavItem = document.getElementById("publishNavItem");
     el.heroPublishButton = document.getElementById("heroPublishButton");
+    el.loginNavLink = document.getElementById("loginNavLink");
+    el.registerNavLink = document.getElementById("registerNavLink");
+    el.logoutButton = document.getElementById("logoutButton");
+    el.authUserBadge = document.getElementById("authUserBadge");
+    el.loginForm = document.getElementById("loginForm");
+    el.registerForm = document.getElementById("registerForm");
+    el.loginFeedback = document.getElementById("loginFeedback");
+    el.registerFeedback = document.getElementById("registerFeedback");
+    el.loginEmail = document.getElementById("loginEmail");
+    el.loginPassword = document.getElementById("loginPassword");
+    el.registerName = document.getElementById("registerName");
+    el.registerEmail = document.getElementById("registerEmail");
+    el.registerPassword = document.getElementById("registerPassword");
+    el.registerRole = document.getElementById("registerRole");
   }
 
   async function loadCatalogs() {
@@ -101,7 +123,22 @@
       hydrateQuickSearch();
       renderCars();
       renderWishlist();
+      updateAuthUi();
     });
+
+    el.loginNavLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      new bootstrap.Modal(document.getElementById("loginModal")).show();
+    });
+
+    el.registerNavLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      new bootstrap.Modal(document.getElementById("registerModal")).show();
+    });
+
+    el.logoutButton.addEventListener("click", handleLogout);
+    el.loginForm.addEventListener("submit", handleLoginSubmit);
+    el.registerForm.addEventListener("submit", handleRegisterSubmit);
 
     el.applyFiltersButton.addEventListener("click", applyFiltersFromDesktop);
     el.clearFiltersButton.addEventListener("click", clearAllFilters);
@@ -134,6 +171,12 @@
 
   function onPublishClick(event) {
     event.preventDefault();
+    if (!state.authToken) {
+      alert(t("msg.loginRequired"));
+      new bootstrap.Modal(document.getElementById("loginModal")).show();
+      return;
+    }
+
     if (state.role !== "seller") {
       alert(t("msg.publishOnlySeller"));
       return;
@@ -157,6 +200,133 @@
   function updatePublishVisibility() {
     el.publishNavItem.style.display = state.role === "seller" ? "list-item" : "none";
     el.heroPublishButton.style.display = state.role === "seller" ? "inline-block" : "none";
+  }
+
+  function updateAuthUi() {
+    if (state.currentUser) {
+      el.authUserBadge.classList.remove("d-none");
+      el.logoutButton.classList.remove("d-none");
+      el.authUserBadge.textContent = `${state.currentUser.fullName} (${t(`role.${state.currentUser.role}`)})`;
+      el.loginNavLink.parentElement.classList.add("d-none");
+      el.registerNavLink.parentElement.classList.add("d-none");
+      el.roleSelect.disabled = true;
+      return;
+    }
+
+    el.authUserBadge.classList.add("d-none");
+    el.logoutButton.classList.add("d-none");
+    el.loginNavLink.parentElement.classList.remove("d-none");
+    el.registerNavLink.parentElement.classList.remove("d-none");
+    el.roleSelect.disabled = false;
+  }
+
+  async function handleLoginSubmit(event) {
+    event.preventDefault();
+    setAuthFeedback(el.loginFeedback, "", false);
+
+    try {
+      const response = await fetch(`${state.apiBaseUrl}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: el.loginEmail.value.trim(),
+          password: el.loginPassword.value
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        setAuthFeedback(el.loginFeedback, data.message || "Login error", true);
+        return;
+      }
+
+      applyAuthSuccess(data);
+      bootstrap.Modal.getOrCreateInstance(document.getElementById("loginModal")).hide();
+      el.loginForm.reset();
+      setAuthFeedback(el.loginFeedback, "", false);
+      alert(t("msg.authSuccess"));
+    } catch (error) {
+      setAuthFeedback(el.loginFeedback, t("msg.authNetwork"), true);
+    }
+  }
+
+  async function handleRegisterSubmit(event) {
+    event.preventDefault();
+    setAuthFeedback(el.registerFeedback, "", false);
+
+    try {
+      const response = await fetch(`${state.apiBaseUrl}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fullName: el.registerName.value.trim(),
+          email: el.registerEmail.value.trim(),
+          password: el.registerPassword.value,
+          role: el.registerRole.value
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        setAuthFeedback(el.registerFeedback, data.message || "Register error", true);
+        return;
+      }
+
+      applyAuthSuccess(data);
+      bootstrap.Modal.getOrCreateInstance(document.getElementById("registerModal")).hide();
+      el.registerForm.reset();
+      setAuthFeedback(el.registerFeedback, "", false);
+      alert(t("msg.authSuccess"));
+    } catch (error) {
+      setAuthFeedback(el.registerFeedback, t("msg.authNetwork"), true);
+    }
+  }
+
+  function applyAuthSuccess(data) {
+    state.authToken = data.accessToken;
+    state.currentUser = data.user;
+    state.role = data.user.role;
+
+    localStorage.setItem("automarket_auth_token", state.authToken);
+    localStorage.setItem("automarket_user", JSON.stringify(state.currentUser));
+    localStorage.setItem("automarket_role", state.role);
+
+    el.roleSelect.value = state.role;
+    updatePublishVisibility();
+    updateRoleLabels();
+    updateAuthUi();
+  }
+
+  function handleLogout() {
+    state.authToken = "";
+    state.currentUser = null;
+    state.role = "buyer";
+
+    localStorage.removeItem("automarket_auth_token");
+    localStorage.removeItem("automarket_user");
+    localStorage.setItem("automarket_role", state.role);
+
+    el.roleSelect.value = "buyer";
+    updatePublishVisibility();
+    updateRoleLabels();
+    updateAuthUi();
+  }
+
+  function setAuthFeedback(node, message, isError) {
+    if (!message) {
+      node.classList.add("d-none");
+      node.textContent = "";
+      return;
+    }
+
+    node.classList.remove("d-none");
+    node.classList.toggle("alert-danger", isError);
+    node.classList.toggle("alert-success", !isError);
+    node.textContent = message;
   }
 
   function updateRoleLabels() {
