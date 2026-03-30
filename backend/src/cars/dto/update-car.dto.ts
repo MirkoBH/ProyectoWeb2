@@ -1,4 +1,5 @@
 import {
+	IsArray,
 	IsInt,
 	IsNumber,
 	IsOptional,
@@ -57,4 +58,9 @@ export class UpdateCarDto {
 	@IsOptional()
 	@IsString()
 	mainImageUrl?: string;
+
+	@IsOptional()
+	@IsArray()
+	@IsString({ each: true })
+	imageUrls?: string[];
 }

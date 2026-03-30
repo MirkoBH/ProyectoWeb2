@@ -2,14 +2,17 @@ import {
   Body,
   Controller,
   Delete,
+  UploadedFiles,
   Get,
   Param,
   Patch,
   Post,
   Query,
   Req,
+  UseInterceptors,
   UseGuards
 } from "@nestjs/common";
+import { FilesInterceptor } from "@nestjs/platform-express";
 import { CarsService } from "./cars.service";
 import { CreateCarDto } from "./dto/create-car.dto";
 import { UpdateCarDto } from "./dto/update-car.dto";
@@ -30,6 +33,14 @@ export class CarsController {
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.carsService.findOne(id);
+  }
+
+  @Post("upload-images")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("seller")
+  @UseInterceptors(FilesInterceptor("images", 8))
+  uploadImages(@UploadedFiles() files: any[]) {
+    return this.carsService.uploadImages(files);
   }
 
   @Post()

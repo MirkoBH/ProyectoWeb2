@@ -1,0 +1,232 @@
+Plataforma Inteligente de Compra y 
+Venta de Autos Usados 
+1. Introducción 
+El mercado de autos usados ha crecido significativamente en los últimos años, impulsado 
+por plataformas digitales que permiten conectar compradores y vendedores de manera 
+directa. Sin embargo, muchas veces los compradores enfrentan dificultades para evaluar el 
+estado real de un vehículo o determinar si el precio solicitado es razonable. 
+El objetivo de este proyecto es desarrollar una plataforma web de compra y venta de 
+autos usados, donde los vendedores puedan publicar vehículos y los compradores puedan 
+buscarlos, analizarlos y compararlos. 
+Como elemento innovador, el sistema deberá integrar inteligencia artificial para analizar 
+fotografías del vehículo, permitiendo estimar: 
+● el estado general del automóvil 
+● posibles daños visibles 
+● una estimación aproximada del valor de mercado 
+Este proyecto permitirá aplicar conceptos fundamentales de desarrollo web como: 
+● arquitectura cliente-servidor 
+● desarrollo de interfaces web dinámicas 
+● APIs backend 
+● manejo de imágenes 
+● integración con servicios de inteligencia artificial 
+● despliegue de aplicaciones web 
+2. Objetivos del Proyecto 
+El objetivo general del proyecto es desarrollar una plataforma web completa que permita 
+publicar, buscar y analizar autos usados. 
+Objetivos específicos: 
+● Desarrollar una interfaz web para publicar y buscar vehículos. 
+● Implementar un backend que gestione usuarios y publicaciones. 
+● Integrar inteligencia artificial para analizar imágenes de vehículos. 
+● Facilitar la comparación de vehículos para compradores. 
+● Implementar filtros de búsqueda avanzados. 
+● Publicar el sistema en un hosting gratuito accesible públicamente. 
+1 
+INGENIERÍA WEB II - 2026 
+3. Descripción del Sistema 
+La plataforma deberá permitir la interacción entre dos tipos de usuarios principales. 
+1. Vendedor 
+Es el usuario que desea publicar un vehículo en la plataforma para venderlo. 
+Podrá: 
+● registrarse en la plataforma 
+● iniciar sesión 
+● publicar autos usados 
+● subir imágenes del vehículo 
+● editar publicaciones 
+● eliminar publicaciones 
+● recibir consultas de compradores 
+2. Comprador 
+Es el usuario que desea buscar autos disponibles en la plataforma. 
+Podrá: 
+● registrarse 
+● buscar autos disponibles 
+● aplicar filtros de búsqueda 
+● ver el detalle de cada vehículo 
+● analizar la estimación de estado generada por IA 
+● comparar diferentes vehículos 
+● contactar al vendedor 
+4. Funcionalidades Principales 
+El sistema deberá incluir las siguientes funcionalidades mínimas. 
+4.1 Gestión de usuarios 
+El sistema deberá permitir: 
+● registro de usuarios 
+● inicio de sesión 
+● gestión de perfil 
+2 
+INGENIERÍA WEB II - 2026 
+● diferenciación de roles: 
+○ comprador 
+○ vendedor 
+4.2 Publicación de vehículos 
+Los vendedores podrán publicar autos proporcionando información como: 
+● marca 
+● modelo 
+● año 
+● kilometraje 
+● tipo de combustible 
+● transmisión 
+● precio 
+● ubicación 
+● descripción del vehículo 
+Además, deberán poder subir múltiples fotografías del automóvil. 
+4.3 Búsqueda de vehículos 
+Los compradores podrán buscar autos mediante: 
+● marca 
+● modelo 
+● rango de precio 
+● año 
+● kilometraje 
+● ubicación 
+Los resultados deberán mostrarse en forma de listado con información resumida. 
+4.4 Visualización de detalles 
+Cada vehículo deberá tener una página de detalle que incluya: 
+● galería de imágenes 
+● características del vehículo 
+● descripción 
+● precio 
+● ubicación 
+● análisis realizado por inteligencia artificial 
+3 
+INGENIERÍA WEB II - 2026 
+4.5 Inteligencia artificial para análisis de 
+imágenes 
+El sistema deberá integrar un servicio de inteligencia artificial capaz de analizar las 
+fotografías del vehículo. 
+La IA deberá intentar: 
+● identificar daños visibles 
+● estimar el estado general del auto 
+● sugerir un rango estimado de precio 
+La estimación podrá mostrarse como: 
+● excelente estado 
+● buen estado 
+● estado regular 
+● requiere reparación 
+4.6 Comparación de vehículos 
+Los compradores podrán seleccionar varios vehículos y compararlos en base a: 
+● precio 
+● año 
+● kilometraje 
+● características principales 
+4.7 Contacto entre comprador y 
+vendedor 
+El sistema deberá permitir que un comprador envíe una consulta al vendedor sobre un 
+vehículo. 
+5. Arquitectura del Sistema 
+El sistema deberá implementar una arquitectura cliente-servidor. 
+Frontend (HTML, CSS, JS) 
+│ 
+│ HTTP / REST API 
+4 
+INGENIERÍA WEB II - 2026 
+▼ 
+Backend (NestJS) 
+│ 
+▼ 
+Base de datos 
+6. Tecnologías obligatorias 
+Frontend 
+Debe utilizar: 
+● HTML 
+● CSS 
+● JavaScript 
+Se espera el uso de: 
+● manipulación del DOM 
+● formularios dinámicos 
+● validaciones del lado del cliente 
+● consumo de APIs mediante fetch o axios 
+Backend 
+Debe desarrollarse con: 
+NestJS 
+El backend deberá implementar: 
+● API REST 
+● CRUD de publicaciones 
+● gestión de usuarios 
+● manejo de imágenes 
+● integración con servicio de IA 
+Ejemplo de endpoints: 
+POST /auth/register 
+POST /auth/login 
+GET /cars 
+GET /cars/:id 
+POST /cars 
+PUT /cars/:id 
+5 
+INGENIERÍA WEB II - 2026 
+DELETE /cars/:id 
+POST /cars/upload-images 
+7. Requisitos técnicos mínimos 
+El sistema deberá incluir: 
+Backend 
+● API REST 
+● CRUD de vehículos 
+● gestión de usuarios 
+● subida de imágenes 
+● integración con IA 
+● persistencia de datos 
+Frontend 
+● interfaz responsive 
+● formularios para publicar vehículos 
+● visualización de resultados 
+● consumo de APIs 
+8. Despliegue del proyecto 
+El sistema deberá estar publicado en internet utilizando servicios gratuitos. 
+Opciones sugeridas: 
+Frontend: 
+● Vercel 
+● Netlify 
+● GitHub Pages 
+Backend: 
+● Render 
+● Railway 
+● Fly.io 
+Base de datos: 
+● Supabase 
+● Railway 
+● MongoDB Atlas 
+6 
+INGENIERÍA WEB II - 2026 
+9. Entregables 
+Cada grupo deberá entregar: 
+Código fuente 
+Repositorio en GitHub con: 
+● frontend 
+● backend 
+● documentación 
+Aplicación funcionando 
+Se deberá entregar: 
+● URL del frontend 
+● URL del backend 
+Documentación 
+Debe incluir: 
+● descripción del sistema 
+● arquitectura 
+● modelo de datos 
+● endpoints 
+● explicación de la integración con IA 
+Presentación final 
+Cada grupo deberá realizar una demo del sistema, mostrando: 
+● registro 
+● publicación de autos 
+● búsqueda 
+● análisis con IA 
+● funcionalidades principales 
+10. Criterios de evaluación 
+Se evaluará: 
+● funcionamiento del sistema 
+● calidad del código 
+● diseño de la interfaz 
+7 
+INGENIERÍA WEB II - 2026 
+● integración con IA 
+● arquitectura utilizada 
+● originalidad de las funcionalidades 
+● calidad de la presentación 

@@ -47,6 +47,9 @@ export class Car {
   @Column({ type: "text", nullable: true, name: "main_image_url" })
   mainImageUrl!: string | null;
 
+  @Column({ type: "text", array: true, nullable: true, name: "image_urls" })
+  imageUrls!: string[] | null;
+
   @Column({ type: "text", nullable: true, name: "ai_status" })
   aiStatus!: string | null;
 

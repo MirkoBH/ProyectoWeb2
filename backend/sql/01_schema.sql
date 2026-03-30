@@ -23,6 +23,7 @@ create table if not exists public.cars (
   city text,
   description text not null,
   main_image_url text,
+  image_urls text[],
   ai_status text,
   ai_damage_summary text,
   ai_price_range text,

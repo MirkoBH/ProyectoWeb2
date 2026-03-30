@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalle | AutoMarket</title>
+  <meta name="description" content="Detalle de publicación de auto usado en AutoMarket." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: "#D32F45",
+              ink: "#000000",
+              paper: "#F5F5F5",
+              muted: "#666666"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+            display: ["Manrope", "Inter", "sans-serif"]
+          },
+          boxShadow: {
+            panel: "0 20px 45px -28px rgba(18, 25, 38, 0.45)"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./src/css/styles.css" />
+</head>
+<body class="detail-page-body vehicle-detail-root bg-brand-paper text-brand-ink">
+  <header>
+    <nav class="navbar navbar-expand-lg nav-follow glass-nav repo-navbar py-2 border-b border-white/60 bg-white/55 backdrop-blur-md">
+      <div class="container max-w-7xl">
+        <a class="navbar-brand fw-bold brand-mark repo-brand flex items-center gap-2 text-xl font-extrabold tracking-tight text-brand-ink" href="./index.html#home">
+          <span class="repo-brand-icon" aria-hidden="true">🚗</span>
+          <span>AutoMarket</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#detailNav" aria-controls="detailNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse w-100 items-center" id="detailNav">
+          <ul class="navbar-nav mx-auto gap-lg-1 repo-nav-links items-center gap-2">
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="./index.html#home">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="./index.html#explore">Explorar</a></li>
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="./index.html#contact">Contacto</a></li>
+          </ul>
+          <div class="d-flex align-items-center gap-2 topbar-actions navbar-tools-wrap ms-lg-auto">
+            <a href="./index.html#explore" class="nav-link nav-pill-link repo-nav-link rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" id="detailBackLink">Volver a búsqueda</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="vehicle-detail-main-wrap py-8 sm:py-10">
+    <div class="container detail-page-container mx-auto max-w-7xl px-3 sm:px-4">
+      <div id="detailLoading" class="alert alert-light border rounded-2xl border-slate-200 bg-white">Cargando publicación...</div>
+      <div id="detailNotFound" class="alert alert-warning d-none rounded-2xl">No encontramos esta publicación.</div>
+      <section id="detailPageContent" class="d-none"></section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="./src/js/i18n.js"></script>
+  <script src="./src/js/data.js"></script>
+  <script src="./src/js/car-detail.js"></script>
+</body>
+</html>

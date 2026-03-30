@@ -5,30 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AutoMarket</title>
   <meta name="description" content="Plataforma inteligente para compra y venta de autos usados." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: "#D32F45",
+              ink: "#000000",
+              paper: "#F5F5F5",
+              muted: "#666666"
+            }
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+            display: ["Manrope", "Inter", "sans-serif"]
+          },
+          boxShadow: {
+            panel: "0 20px 45px -28px rgba(18, 25, 38, 0.45)"
+          }
+        }
+      }
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
   <link rel="stylesheet" href="./src/css/styles.css" />
 </head>
-<body>
+<body class="bg-brand-paper text-brand-ink">
   <header>
-    <nav class="navbar navbar-expand-lg fixed-top glass-nav py-3">
-      <div class="container">
-        <a class="navbar-brand fw-bold brand-mark" href="#home">AutoMarket</a>
+    <nav class="navbar navbar-expand-lg nav-follow glass-nav repo-navbar py-2 border-b border-white/60 bg-white/55 backdrop-blur-md">
+      <div class="container max-w-7xl">
+        <a class="navbar-brand fw-bold brand-mark repo-brand flex items-center gap-2 text-xl font-extrabold tracking-tight text-brand-ink" href="#home">
+          <span class="repo-brand-icon" aria-hidden="true">🚗</span>
+          <span>AutoMarket</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav ms-auto me-3 gap-lg-2">
-            <li class="nav-item"><a class="nav-link" href="#home" data-i18n="nav.home">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="#explore" data-i18n="nav.explore">Explorar</a></li>
-            <li class="nav-item" id="publishNavItem"><a class="nav-link" href="#" data-i18n="nav.publish">Publicar</a></li>
-            <li class="nav-item"><a class="nav-link" id="loginNavLink" href="#" data-i18n="nav.login">Login</a></li>
-            <li class="nav-item"><a class="nav-link" id="registerNavLink" href="#" data-i18n="nav.register">Registro</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contact" data-i18n="nav.contact">Contacto</a></li>
+        <div class="collapse navbar-collapse w-100 items-center" id="mainNav">
+          <ul class="navbar-nav mx-auto gap-lg-1 repo-nav-links items-center gap-2">
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#home" data-i18n="nav.home">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#explore" data-i18n="nav.dashboard">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#explore" data-i18n="nav.explore">Explorar</a></li>
+            <li class="nav-item"><a class="nav-link nav-pill-link repo-nav-link rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#contact" data-i18n="nav.contact">Contacto</a></li>
+            <li class="nav-item" id="publishNavItem"><a class="nav-link nav-pill-link repo-nav-link repo-nav-publish rounded-xl bg-brand-red px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700" href="#" data-i18n="nav.publish">Publicar</a></li>
           </ul>
-          <div class="d-flex align-items-center gap-2">
+          <div class="d-flex align-items-center gap-2 topbar-actions navbar-tools-wrap ms-lg-auto">
+            <button class="btn btn-outline-dark btn-sm" id="wishlistButton" data-bs-toggle="offcanvas" data-bs-target="#wishlistDrawer" aria-controls="wishlistDrawer">
+              <span data-i18n="wishlist.title">Deseados</span>
+            </button>
             <select id="roleSelect" class="form-select form-select-sm lang-select" aria-label="Role selector">
               <option value="buyer">Buyer</option>
               <option value="seller">Seller</option>
@@ -38,10 +68,9 @@
               <option value="en">EN</option>
             </select>
             <span id="authUserBadge" class="badge text-bg-dark d-none"></span>
-            <button class="btn btn-outline-danger btn-sm d-none" id="logoutButton" data-i18n="nav.logout">Salir</button>
-            <button class="btn btn-outline-dark btn-sm" id="wishlistButton" data-bs-toggle="offcanvas" data-bs-target="#wishlistDrawer" aria-controls="wishlistDrawer">
-              <span data-i18n="wishlist.title">Deseados</span>
-            </button>
+            <a class="nav-link nav-pill-link repo-nav-link rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" id="loginNavLink" href="#" data-i18n="nav.profile">Perfil</a>
+            <a class="nav-link nav-pill-link repo-nav-link rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" id="registerNavLink" href="#" data-i18n="nav.register">Registro</a>
+            <a class="nav-link nav-pill-link repo-nav-link d-none rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900" id="logoutButton" href="#" data-i18n="nav.logout">Salir</a>
           </div>
         </div>
       </div>
@@ -49,105 +78,59 @@
   </header>
 
   <main>
-    <section id="home" class="hero-section d-flex align-items-end">
-      <div class="container pb-5">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-7">
-            <p class="kicker mb-2" data-i18n="hero.kicker">Compra y venta inteligente</p>
-            <h1 class="display-5 fw-bold mb-3" data-i18n="hero.title">Encontra tu proximo auto usado con analisis IA.</h1>
-            <p class="lead text-muted mb-4" data-i18n="hero.subtitle">Filtra por marca, modelo, anio, precio y ubicacion en segundos.</p>
-            <div class="d-flex flex-wrap gap-2 hero-actions">
-              <a href="#explore" class="btn btn-primary-red btn-lg" data-i18n="hero.ctaExplore">Buscar autos</a>
-              <button class="btn btn-dark btn-lg" id="heroPublishButton" data-i18n="hero.ctaPublish">Publicar auto</button>
-            </div>
-            <div class="metrics d-flex flex-wrap gap-4 mt-4">
-              <div>
-                <strong id="metricCars">0</strong>
-                <span data-i18n="hero.metrics.cars">Autos publicados</span>
-              </div>
-              <div>
-                <strong>98%</strong>
-                <span data-i18n="hero.metrics.trust">Consultas respondidas</span>
-              </div>
-              <div>
-                <strong>24h</strong>
-                <span data-i18n="hero.metrics.ai">Analisis IA estimado</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-5">
-            <div class="card shadow-soft border-0 p-3 hero-card">
-              <h2 class="h5 fw-bold" data-i18n="filters.quickSearch">Busqueda rapida</h2>
-              <form id="heroSearchForm" class="row g-2 mt-1">
-                <div class="col-12">
-                  <select id="quickBrand" class="form-select" aria-label="Marca"></select>
-                </div>
-                <div class="col-12">
-                  <select id="quickModel" class="form-select" aria-label="Modelo"></select>
-                </div>
-                <div class="col-6">
-                  <input id="quickMinPrice" class="form-control" type="number" min="0" placeholder="Precio min" />
-                </div>
-                <div class="col-6">
-                  <input id="quickMaxPrice" class="form-control" type="number" min="0" placeholder="Precio max" />
-                </div>
-                <div class="col-12">
-                  <button type="submit" class="btn btn-primary-red w-100" data-i18n="filters.search">Buscar</button>
-                </div>
-              </form>
-            </div>
-          </div>
+    <section id="home" class="hero-section pt-28 pb-14 sm:pt-32 sm:pb-16">
+      <div class="container hero-container max-w-7xl rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-6 py-12 text-center text-white shadow-panel sm:px-12">
+        <p class="kicker mb-2 text-xs font-bold uppercase tracking-[0.22em] text-red-300" data-i18n="hero.kicker">Compra y venta inteligente</p>
+        <h1 class="hero-main-title mb-3 font-display text-4xl font-extrabold leading-tight sm:text-5xl" data-i18n="hero.title">Encontrá tu próximo auto usado con análisis IA.</h1>
+        <p class="hero-main-subtitle mx-auto mb-6 max-w-2xl text-base text-slate-200 sm:text-lg" data-i18n="hero.subtitle">Filtra por marca, modelo, año, precio y ubicación en segundos.</p>
+        <div class="d-flex flex-wrap gap-2 justify-content-center hero-actions items-center">
+          <a href="#explore" class="btn btn-primary-red btn-lg" data-i18n="hero.ctaExplore">Buscar autos</a>
+          <button class="btn btn-dark btn-lg" id="heroPublishButton" data-i18n="hero.ctaPublish">Publicar auto</button>
+        </div>
+        <div class="hero-metric-anchor" aria-hidden="true">
+          <strong id="metricCars">0</strong>
         </div>
       </div>
     </section>
 
-    <section id="explore" class="py-5">
-      <div class="container">
+    <section id="explore" class="py-10 sm:py-14">
+      <div class="container max-w-7xl">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
           <div>
-            <p class="kicker mb-1" data-i18n="explore.kicker">Explorar publicaciones</p>
-            <h2 class="mb-0" data-i18n="explore.title">Listado de autos usados</h2>
+            <p class="kicker mb-1 text-xs font-bold uppercase tracking-[0.2em] text-brand-red" data-i18n="explore.kicker">Explorar publicaciones</p>
+            <h2 class="mb-0 font-display text-3xl font-extrabold text-brand-ink" data-i18n="explore.title">Listado de autos usados</h2>
           </div>
           <div class="d-flex gap-2 align-items-center">
-            <span class="small text-muted" id="resultCount">0 resultados</span>
+            <span class="small rounded-full bg-white px-3 py-1.5 text-slate-600 shadow-sm" id="resultCount">0 resultados</span>
             <button id="openFilterDrawer" class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#filtersDrawer" aria-controls="filtersDrawer" data-i18n="filters.title">Filtros</button>
           </div>
         </div>
 
-        <div class="row g-4">
-          <div class="col-lg-3 d-none d-lg-block">
-            <aside class="card border-0 shadow-soft p-3 filter-panel">
-              <h3 class="h6 fw-bold" data-i18n="filters.title">Filtros</h3>
-              <div id="filtersContainer"></div>
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-primary-red" id="applyFiltersButton" data-i18n="filters.apply">Aplicar filtros</button>
-                <button class="btn btn-outline-dark" id="clearFiltersButton" data-i18n="filters.clear">Limpiar filtros</button>
-              </div>
-            </aside>
+        <aside class="card border-0 shadow-soft p-3 filter-panel mb-4 rounded-3xl border border-slate-200 bg-white p-4 shadow-panel sm:p-6">
+          <h3 class="h6 fw-bold mb-3 text-sm font-bold uppercase tracking-[0.17em] text-slate-500" data-i18n="filters.title">Filtros</h3>
+          <div id="filtersContainer"></div>
+          <div class="filter-actions mt-4 flex flex-wrap gap-2">
+            <button class="btn btn-primary-red rounded-xl px-5 py-2.5 font-semibold" id="applyFiltersButton" data-i18n="filters.apply">Aplicar filtros</button>
+            <button class="btn btn-outline-dark rounded-xl px-5 py-2.5 font-semibold" id="clearFiltersButton" data-i18n="filters.clear">Limpiar filtros</button>
+            <button class="btn btn-dark rounded-xl px-5 py-2.5 font-semibold disabled:opacity-50" id="compareSelectedButton" disabled data-i18n="compare.compareSelected">Comparar seleccionados</button>
           </div>
+        </aside>
 
-          <div class="col-lg-9">
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <button class="btn btn-dark" id="compareSelectedButton" disabled data-i18n="compare.compareSelected">Comparar seleccionados</button>
-              <button class="btn btn-outline-dark" id="compareWishlistButton" data-i18n="compare.compareWishlist">Comparar desde deseados</button>
-            </div>
-            <div id="carsGrid" class="row g-3"></div>
-            <div id="emptyState" class="alert alert-light border mt-3 d-none" data-i18n="explore.empty">No encontramos autos con esos filtros.</div>
-          </div>
-        </div>
+        <div id="carsGrid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+        <div id="emptyState" class="alert alert-light border mt-3 d-none rounded-2xl border-slate-200 bg-white" data-i18n="explore.empty">No encontramos autos con esos filtros.</div>
       </div>
     </section>
 
-    <section id="contact" class="py-5 contact-band">
-      <div class="container">
+    <section id="contact" class="py-12 contact-band">
+      <div class="container max-w-7xl">
         <div class="row g-4 align-items-center">
           <div class="col-lg-6">
-            <p class="kicker mb-2" data-i18n="contact.kicker">Contacto</p>
-            <h2 class="mb-3" data-i18n="contact.title">Hablemos de tu proxima publicacion</h2>
-            <p class="text-muted" data-i18n="contact.subtitle">Escribinos para conocer mas sobre AutoMarket.</p>
+            <p class="kicker mb-2 text-xs font-bold uppercase tracking-[0.2em] text-brand-red" data-i18n="contact.kicker">Contacto</p>
+            <h2 class="mb-3 font-display text-3xl font-extrabold text-brand-ink" data-i18n="contact.title">Hablemos de tu próxima publicación</h2>
+            <p class="text-muted text-slate-600" data-i18n="contact.subtitle">Escribinos para conocer más sobre AutoMarket.</p>
           </div>
           <div class="col-lg-6">
-            <form class="card border-0 p-4 shadow-soft">
+            <form class="card border-0 rounded-3xl border border-slate-200 p-4 shadow-panel sm:p-6">
               <div class="mb-3">
                 <label class="form-label" for="contactName" data-i18n="contact.name">Nombre</label>
                 <input class="form-control" id="contactName" type="text" required />
@@ -168,11 +151,11 @@
     </section>
   </main>
 
-  <footer class="py-4 border-top bg-white">
-    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+  <footer class="py-5 border-top border-slate-200 bg-white/90">
+    <div class="container max-w-7xl d-flex flex-column flex-md-row justify-content-between gap-2">
       <small>&copy; <span id="currentYear"></span> AutoMarket</small>
       <div class="d-flex gap-3 small">
-        <a href="#" class="footer-link" data-i18n="footer.terms">Terminos</a>
+        <a href="#" class="footer-link" data-i18n="footer.terms">Términos</a>
         <a href="#" class="footer-link" data-i18n="footer.privacy">Privacidad</a>
         <a href="#contact" class="footer-link" data-i18n="footer.support">Soporte</a>
       </div>
@@ -186,7 +169,6 @@
     </div>
     <div class="offcanvas-body">
       <div id="wishlistItems"></div>
-      <button class="btn btn-dark w-100 mt-3" id="wishlistCompareButton" data-i18n="compare.compareWishlist">Comparar desde deseados</button>
     </div>
   </div>
 
@@ -208,7 +190,7 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="compareModalLabel" data-i18n="compare.title">Comparacion de autos</h5>
+          <h5 class="modal-title" id="compareModalLabel" data-i18n="compare.title">Comparación de autos</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="compareTableContainer"></div>
@@ -220,7 +202,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLabel" data-i18n="auth.loginTitle">Iniciar sesion</h5>
+          <h5 class="modal-title" id="loginModalLabel" data-i18n="auth.loginTitle">Iniciar sesión</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="loginForm">
@@ -231,8 +213,11 @@
               <input id="loginEmail" class="form-control" type="email" required />
             </div>
             <div class="mb-3">
-              <label class="form-label" for="loginPassword" data-i18n="auth.password">Contrasena</label>
+              <label class="form-label" for="loginPassword" data-i18n="auth.password">Contraseña</label>
               <input id="loginPassword" class="form-control" type="password" minlength="6" required />
+            </div>
+            <div class="mb-0 text-end">
+              <a href="./recover-password.html" class="small text-decoration-none">¿Olvidaste tu contraseña?</a>
             </div>
           </div>
           <div class="modal-footer">
@@ -263,7 +248,7 @@
               <input id="registerEmail" class="form-control" type="email" required />
             </div>
             <div class="mb-3">
-              <label class="form-label" for="registerPassword" data-i18n="auth.password">Contrasena</label>
+              <label class="form-label" for="registerPassword" data-i18n="auth.password">Contraseña</label>
               <input id="registerPassword" class="form-control" type="password" minlength="6" required />
             </div>
             <div class="mb-0">
@@ -283,7 +268,82 @@
     </div>
   </div>
 
+  <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="publishModalLabel" data-i18n="publish.title">Publicar auto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="publishForm">
+          <div class="modal-body">
+            <div id="publishFeedback" class="alert alert-danger d-none" role="alert"></div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="publishBrand" data-i18n="label.brand">Marca</label>
+                <select id="publishBrand" class="form-select" required></select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="publishModel" data-i18n="label.model">Modelo</label>
+                <select id="publishModel" class="form-select" required></select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="publishYear" data-i18n="table.year">Año</label>
+                <input id="publishYear" class="form-control" type="number" min="1950" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="publishKilometers" data-i18n="table.km">Kilometraje</label>
+                <input id="publishKilometers" class="form-control" type="number" min="0" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="publishPrice" data-i18n="table.price">Precio</label>
+                <input id="publishPrice" class="form-control" type="number" min="0" step="0.01" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="publishFuel" data-i18n="label.fuel">Combustible</label>
+                <select id="publishFuel" class="form-select" required>
+                  <option value="Nafta">Nafta</option>
+                  <option value="Diesel">Diesel</option>
+                  <option value="Hibrido">Hibrido</option>
+                  <option value="Electrico">Electrico</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="publishTransmission" data-i18n="label.transmission">Transmisión</label>
+                <select id="publishTransmission" class="form-select" required>
+                  <option value="Manual">Manual</option>
+                  <option value="Automatica">Automatica</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="publishProvince" data-i18n="label.province">Provincia</label>
+                <select id="publishProvince" class="form-select" required></select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="publishCity" data-i18n="publish.city">Ciudad</label>
+                <input id="publishCity" class="form-control" type="text" />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="publishImageFiles" data-i18n="publish.imageFiles">Imágenes JPG (máx 2MB c/u)</label>
+                <input id="publishImageFiles" class="form-control" type="file" accept=".jpg,.jpeg,image/jpeg" multiple required />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="publishDescription" data-i18n="contact.message">Descripción</label>
+                <textarea id="publishDescription" class="form-control" rows="4" minlength="10" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" data-i18n="auth.cancel">Cancelar</button>
+            <button type="submit" class="btn btn-primary-red" data-i18n="publish.submit">Publicar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script src="./src/js/i18n.js"></script>
   <script src="./src/js/data.js"></script>
   <script src="./src/js/app.js"></script>

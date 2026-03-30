@@ -1,0 +1,43 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Serve frontend public 5501",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"--yes",
+				"http-server",
+				"frontend/public",
+				"-p",
+				"5501",
+				"-c-1"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "cleanup-dev-ports",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$ports = @(3000,5500,5501,5173,4173,8080); $conns = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $ports -contains $_.LocalPort }; if (-not $conns) { Write-Output 'NO_LISTENERS_FOUND'; exit 0 }; $targets = $conns | Sort-Object OwningProcess -Unique | Where-Object { $_.OwningProcess -gt 4 }; Write-Output 'BEFORE:'; $targets | ForEach-Object { $p = $null; try { $p = Get-Process -Id $_.OwningProcess -ErrorAction Stop } catch {}; [PSCustomObject]@{ Port = $_.LocalPort; PID = $_.OwningProcess; Process = if ($p) { $p.ProcessName } else { 'unknown' } } } | Format-Table -AutoSize; foreach ($t in $targets) { try { Stop-Process -Id $t.OwningProcess -Force -ErrorAction Stop } catch {} }; Start-Sleep -Milliseconds 300; $after = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $ports -contains $_.LocalPort }; if (-not $after) { Write-Output 'AFTER: ALL_TARGET_PORTS_FREE' } else { Write-Output 'AFTER: STILL_LISTENING'; $after | Sort-Object LocalPort -Unique | ForEach-Object { $p = $null; try { $p = Get-Process -Id $_.OwningProcess -ErrorAction Stop } catch {}; [PSCustomObject]@{ Port = $_.LocalPort; PID = $_.OwningProcess; Process = if ($p) { $p.ProcessName } else { 'unknown' } } } | Format-Table -AutoSize }"
+			]
+		},
+		{
+			"label": "serve-frontend-5501",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"--yes",
+				"http-server",
+				"frontend/public",
+				"-p",
+				"5501",
+				"-c-1"
+			],
+			"isBackground": true
+		}
+	]
+}

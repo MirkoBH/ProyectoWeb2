@@ -20,6 +20,9 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:5432/automarket
 JWT_SECRET=replace_with_secure_secret
 JWT_EXPIRES_IN=1d
 CORS_ORIGIN=http://localhost:5500
+PUBLIC_API_BASE_URL=http://localhost:3000
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-1.5-flash
 ```
 
 ## Scripts
@@ -80,6 +83,25 @@ Credenciales seed:
 - `POST /cars` (requiere JWT + rol seller)
 - `PATCH /cars/:id` (requiere JWT + rol seller y ser dueno de la publicacion)
 - `DELETE /cars/:id` (requiere JWT + rol seller y ser dueno de la publicacion)
+- `POST /cars/upload-images` (requiere JWT + rol seller, soporta multiples JPG hasta 8 archivos, max 2MB c/u)
+
+## Analisis IA durante publicacion
+
+Al crear o editar una publicacion (`POST /cars`, `PATCH /cars/:id`), el backend ejecuta analisis IA usando todos los datos del auto:
+
+- marca, modelo, anio, kilometraje
+- combustible, transmision, precio
+- provincia/ciudad
+- descripcion
+- URL de imagen principal (si existe)
+
+Si `GEMINI_API_KEY` esta configurado, usa Gemini para estimar:
+
+- estado general (`excellent`, `good`, `fair`, `repair`)
+- opinion textual breve
+- rango estimado de precio
+
+Si Gemini no esta disponible o devuelve error, se aplica una heuristica local para no bloquear la publicacion.
 
 ## Como funciona JWT en esta implementacion
 
